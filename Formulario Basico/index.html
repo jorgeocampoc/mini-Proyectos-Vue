@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Practica Vue 7</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-secondary">
+  <div id="app">
+
+    <div class="container my-5">
+      <div class="card p-3 shadow">
+        <div class="card-body">
+          <h3 class="card-title text-center">
+            Formulario de registro de user
+          </h3>
+          <form class="form" @submit.prevent="register()">
+            <div class="row">
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nombre</label>
+                  <input type="text" name="name" class="form-control" v-model="user.name" />
+                  <span class="text-danger" v-if="submited && v$.user.name.$error">El nombre es requerido</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="lastName" class="form-label">Apellidos</label>
+                  <input type="text" name="lastName" class="form-control" v-model="user.lastName" />
+                  <span class="text-danger" v-if="submited && v$.user.lastName.$error">El apellido es requerido</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Telefono</label>
+                  <input type="text" name="phone" class="form-control" v-model="user.phone" />
+                  <span class="text-danger" v-if="submited && v$.user.phone.$error">El telefono es requerido</span>
+
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="email" class="form-label">Correo</label>
+                  <input type="email" name="email" class="form-control" v-model="user.email" />
+                  <span class="text-danger" v-if="submited && v$.user.email.$error">El correo es requerido</span>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div>Genero:</div>
+                <div class="form-check form-check-inline my-2">
+                  <input
+                      class="form-check-input"
+                      type="radio"
+                      name="gender"
+                      value="Masculino"
+                      v-model="user.gender" />
+                  <label class="form-check-label" for="gender">Masculino</label>
+                </div>
+                <div class="form-check form-check-inline">
+                 <input
+                      class="form-check-input"
+                      type="radio"
+                      name="gender"
+                      value="Femenino"
+                      v-model="user.gender" />
+                  <label class="form-check-label" for="gender">Femenino</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                      class="form-check-input"
+                      type="radio"
+                      name="gender"
+                      value="Otro"
+                      v-model="user.gender" />
+                  <label class="form-check-label" for="gender">Otro</label>
+                </div>
+                <br>
+                <span class="text-danger" v-if="submited && v$.user.gender.$error">El genero es requerido</span>
+
+              </div>
+              <div class="col-6">
+                <label for="departamento" class="form-control-label mb-1">Departamento</label>
+                <select name="departamento" class="form-select" v-model="user.state">
+                  <option value="" selected disabled>Escoge una opcion</option>
+                  <option value=" La Paz">La Paz</option>
+                  <option value="Santa Cruz">Santa Cruz</option>
+                  <option value="Cochabamba">Cochabamba</option>
+                  <option value="Tarija">Tarija</option>
+                  <option value="Beni">Beni</option>
+                  <option value="Pando">Pando</option>
+                  <option value="Chuquisaca">Chuquisaca</option>
+                  <option value="Oruro">Oruro</option>
+                  <option value="Potosi">Potosi</option>
+                </select>
+                <span class="text-danger" v-if="submited && v$.user.state.$error">El departamento es requerido</span>
+
+              </div>
+             <div class="row mt-3 justify-content-between mb-3">
+              <div class="col-4 ">
+                <p>Preferencias musicales</p>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input mx-1"  value="pop" v-model="user.favoriteSongs">
+                <label for="pop" class="form-check-label">Pop</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox"  class="form-check-input mx-1" value="rock" v-model="user.favoriteSongs">
+                <label for="rock" class="form-check-label">Rock</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input mx-1" value="clasico" v-model="user.favoriteSongs">
+                <label for="clasico" class="form-check-label">Clasico</label>
+                </div>
+              </div>
+              <div class="col-7">
+                <label for="profile" class="form-label mt-2"> Perfil academico</label>
+                <textarea class="form-control "  v-model="user.profile"></textarea>
+                <span class="text-danger" v-if="submited && v$.user.profile.$error">El perfil es requerido</span>
+
+              </div>
+              
+             </div>
+            </div>
+            <div class="row justify-content-center ">
+              <div class="col-3  text-center ">
+                <button type="submit" :class="index !== null ? 'btn btn-warning':'btn btn-primary' ">
+                  {{index !== null ? 'Actualizar' : 'Registrar'}}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid ">
+      <div class="card my-5 shadow">
+        <div class="card-body">
+          <h3 class="card-title text-center underline index pb-2">Lista de clientes</h3>
+          <table class="table table-bordered ">
+            <thead>
+              <tr>
+                <td>Id</td>
+                <td>Nombre</td>
+                <td>Apellidos</td>
+                <td>Telefono</td>
+                <td>Correo</td>
+                <td>Genero</td>
+                <td>Departamento</td>
+                <td>Preferencias musicales</td>
+                <td>Perfil academico</td>
+                <td>Acciones</td>
+              </tr>
+            </thead>
+            <tbody>
+   
+
+              <tr v-for="(user,i) in users" :key="i">
+                <td>{{i+1}}</td>
+                <td> {{user.name}} </td>
+                <td> {{user.lastName}} </td>
+                <td> {{user.phone1}} </td>
+                <td> {{user.email}} </td>
+                <td> {{user.gender}} </td>
+                <td> {{user.state}} </td>
+                <td> 
+                  <span v-if="user.favoriteSongs.length >0">{{user.favoriteSongs}}</span> 
+                  <span v-else>Sin preferencias musicales</span> 
+                </td>
+                <td> {{user.profile}} </td>
+                <td>
+                  <button class="btn btn-warning btn-sm mx-1" @click="editUser(i)">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                  </button>
+                  <button class="btn btn-danger btn-sm mx-1" @click="deleteUser(i)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-demi"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vuelidate/core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vuelidate/validators"></script>
+
+<!--  Vuelidate -->
+<script src="app.js"></script>
+
+
+
+
+</body>
+
+</html>
